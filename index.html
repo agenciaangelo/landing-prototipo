@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nossos Ventos — Últimos 5 Lotes | Condomínio Clube em João Câmara</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --verde:  #00875C;
+    --verde2: #00A876;
+    --verde3: #005C40;
+    --ouro:  #C9A96E;
+    --ouro2: #E0C088;
+    --ouro3: #A8884A;
+    --dark:   #050E0A;
+    --dark2:  #071410;
+    --dark3:  #0A1C16;
+    --tw:    rgba(255,255,255,0.92);
+    --ts:    rgba(255,255,255,0.45);
+    --td:    rgba(255,255,255,0.15);
+  }
+
+  html { scroll-behavior: smooth; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--dark); color: white; font-size: 15px; line-height: 1.7; overflow-x: hidden; }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(6,14,20,0.96); backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(201,169,110,0.1);
+    padding: 0 56px; height: 60px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .nav-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+  .nav-logo-txt { font-family: 'Montserrat', sans-serif; font-size: 18px; font-weight: 600; color: var(--ouro); letter-spacing: 0.06em; }
+  .nav-logo-sub { font-size: 9px; letter-spacing: 0.2em; color: rgba(255,255,255,0.35); text-transform: uppercase; }
+  .nav-cta { display: inline-flex; align-items: center; gap: 8px; background: var(--ouro); color: var(--dark); font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; padding: 10px 20px; border-radius: 6px; text-decoration: none; transition: background 0.2s; }
+  .nav-cta:hover { background: var(--ouro2); }
+
+  /* ── URGÊNCIA TOPO ── */
+  .urgencia-bar {
+    position: fixed; top: 60px; left: 0; right: 0; z-index: 99;
+    background: var(--ouro3);
+    padding: 8px 16px;
+    text-align: center;
+    font-size: 13px; font-weight: 600; letter-spacing: 0.04em;
+    color: white;
+  }
+  .urgencia-bar span { font-weight: 800; color: #fff; }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: flex; align-items: center;
+    padding: 160px 56px 100px;
+    position: relative; overflow: hidden;
+    background: linear-gradient(160deg, var(--dark) 0%, var(--verde3) 60%, var(--dark) 100%);
+  }
+
+  /* Textura de pontos */
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image: radial-gradient(rgba(201,169,110,0.06) 1px, transparent 1px);
+    background-size: 36px 36px;
+  }
+
+  /* Glow dourado */
+  .hero::after {
+    content: '';
+    position: absolute;
+    top: -200px; right: -150px;
+    width: 800px; height: 800px;
+    background: radial-gradient(ellipse, rgba(201,169,110,0.1) 0%, transparent 65%);
+    pointer-events: none;
+  }
+
+  .hero-inner { max-width: 1040px; margin: 0 auto; width: 100%; position: relative; z-index: 2; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(201,169,110,0.12); border: 1px solid rgba(201,169,110,0.3);
+    color: var(--ouro); font-size: 11px; font-weight: 700;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    padding: 6px 14px; border-radius: 40px;
+    margin-bottom: 22px;
+    opacity: 0; animation: up 0.7s 0.1s forwards;
+  }
+  .hero-badge .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--ouro); animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100% { opacity:1; } 50% { opacity:0.3; } }
+
+  .hero-h1 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: clamp(38px, 5.5vw, 64px);
+    font-weight: 700; line-height: 0.98; color: white;
+    margin-bottom: 22px;
+    opacity: 0; animation: up 0.7s 0.25s forwards;
+  }
+  .hero-h1 em { font-style: italic; color: var(--ouro); font-weight: 400; }
+
+  .hero-p {
+    font-size: 16px; font-weight: 300; color: var(--ts);
+    max-width: 460px; line-height: 1.85; margin-bottom: 36px;
+    opacity: 0; animation: up 0.7s 0.4s forwards;
+  }
+  .hero-p strong { color: var(--tw); font-weight: 500; }
+
+  .hero-btns {
+    display: flex; gap: 12px; flex-wrap: wrap;
+    opacity: 0; animation: up 0.7s 0.52s forwards;
+  }
+  .btn-primary { display: inline-flex; align-items: center; gap: 9px; background: var(--ouro); color: var(--dark); font-size: 13px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; padding: 16px 28px; border-radius: 8px; text-decoration: none; transition: background 0.2s, transform 0.2s; }
+  .btn-primary:hover { background: var(--ouro2); transform: translateY(-2px); }
+  .btn-secondary { display: inline-flex; align-items: center; gap: 9px; background: transparent; border: 1px solid rgba(201,169,110,0.35); color: var(--ouro); font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; padding: 16px 24px; border-radius: 8px; text-decoration: none; transition: background 0.2s; }
+  .btn-secondary:hover { background: rgba(201,169,110,0.08); }
+
+  /* Card de contagem */
+  .hero-counter {
+    background: rgba(201,169,110,0.06); border: 1px solid rgba(201,169,110,0.15);
+    border-radius: 16px; padding: 40px 32px;
+    opacity: 0; animation: up 0.7s 0.45s forwards;
+    text-align: center;
+    position: relative; overflow: hidden;
+  }
+  .hero-counter::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, var(--ouro), transparent); }
+
+  .counter-num {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 96px; font-weight: 700; color: var(--ouro);
+    line-height: 0.9; margin-bottom: 8px;
+    opacity: 0.9;
+  }
+  .counter-label {
+    font-size: 13px; font-weight: 600; letter-spacing: 0.18em;
+    text-transform: uppercase; color: rgba(255,255,255,0.5);
+    margin-bottom: 24px;
+  }
+  .counter-sep { width: 40px; height: 1px; background: rgba(201,169,110,0.3); margin: 0 auto 20px; }
+  .counter-desc { font-size: 13.5px; font-weight: 300; color: var(--ts); line-height: 1.7; }
+  .counter-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 24px; }
+  .c-stat { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.07); border-radius: 10px; padding: 14px 10px; }
+  .c-stat .sv { font-family: 'Montserrat', sans-serif; font-size: 26px; font-weight: 700; color: white; line-height: 1; }
+  .c-stat .sl { font-size: 10px; color: rgba(255,255,255,0.35); letter-spacing: 0.12em; text-transform: uppercase; margin-top: 3px; }
+
+  @keyframes up { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* ── DIFERENCIAIS ── */
+  .dif-sec { padding: 88px 56px; background: var(--dark2); }
+  .dif-inner { max-width: 1040px; margin: 0 auto; }
+  .dif-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 48px; }
+  .dif-card { background: var(--dark3); border: 1px solid rgba(255,255,255,0.07); border-radius: 12px; padding: 28px 22px; text-align: center; transition: border-color 0.2s, transform 0.2s; }
+  .dif-card:hover { border-color: rgba(201,169,110,0.25); transform: translateY(-3px); }
+  .dif-icon { font-size: 20px; color: var(--ouro); opacity: 0.4; margin-bottom: 14px; font-family: "Montserrat", sans-serif; letter-spacing: 0.1em; }
+  .dif-card h4 { font-family: 'Montserrat', sans-serif; font-size: 16px; font-weight: 700; color: white; margin-bottom: 8px; }
+  .dif-card p { font-size: 12.5px; color: var(--ts); line-height: 1.65; }
+
+  /* ── LOTES ── */
+  .lotes-sec { padding: 88px 56px; }
+  .lotes-inner { max-width: 1040px; margin: 0 auto; }
+
+  .sh { display: flex; align-items: center; gap: 14px; margin-bottom: 12px; }
+  .sh-line { width: 32px; height: 1px; background: var(--ouro); }
+  .sh-tag { font-size: 10px; font-weight: 700; letter-spacing: 0.24em; text-transform: uppercase; color: var(--ouro); }
+  .sh-h { font-family: 'Montserrat', sans-serif; font-size: 32px; font-weight: 700; color: white; line-height: 1; margin-bottom: 16px; }
+  .sh-h em { font-style: italic; color: var(--ouro); font-weight: 400; }
+  .sh-p { font-size: 15px; font-weight: 300; color: var(--ts); max-width: 560px; line-height: 1.85; margin-bottom: 44px; }
+
+  .lotes-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 16px; }
+
+  .lote-card {
+    background: var(--dark2);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 14px; padding: 28px 24px;
+    position: relative; overflow: hidden;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .lote-card:hover { border-color: rgba(201,169,110,0.3); transform: translateY(-3px); }
+  .lote-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: rgba(255,255,255,0.05); }
+  .lote-card.destaque::before { background: linear-gradient(90deg, var(--ouro3), var(--ouro)); }
+
+  .lote-num { font-size: 9px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: rgba(255,255,255,0.3); margin-bottom: 8px; }
+  .lote-nome { font-family: 'Montserrat', sans-serif; font-size: 22px; font-weight: 700; color: white; margin-bottom: 4px; }
+  .lote-nome em { font-style: italic; color: var(--ouro); }
+  .lote-area { font-size: 13px; color: var(--ts); margin-bottom: 20px; }
+
+  .lote-specs { display: flex; flex-direction: column; gap: 8px; margin-bottom: 22px; }
+  .lote-spec { display: flex; align-items: center; justify-content: space-between; font-size: 12.5px; }
+  .lote-spec .key { color: rgba(255,255,255,0.38); }
+  .lote-spec .val { color: var(--tw); font-weight: 500; }
+
+  .lote-sep { height: 1px; background: rgba(255,255,255,0.06); margin-bottom: 18px; }
+
+  .lote-preco { font-family: 'Montserrat', sans-serif; font-size: 28px; font-weight: 700; color: white; margin-bottom: 4px; }
+  .lote-preco sup { font-size: 14px; color: var(--ouro); vertical-align: super; margin-right: 2px; }
+  .lote-condicao { font-size: 11px; color: var(--ts); margin-bottom: 18px; }
+
+  .lote-cta { display: flex; align-items: center; justify-content: center; gap: 7px; background: rgba(201,169,110,0.1); border: 1px solid rgba(201,169,110,0.28); color: var(--ouro); font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; padding: 11px 16px; border-radius: 7px; text-decoration: none; transition: background 0.2s; }
+  .lote-cta:hover { background: rgba(201,169,110,0.2); }
+
+  .lote-card.destaque .lote-cta { background: var(--ouro); color: var(--dark); }
+  .lote-card.destaque .lote-cta:hover { background: var(--ouro2); }
+
+  .lote-badge-destaque { display: inline-block; font-size: 9px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ouro); background: rgba(201,169,110,0.12); border: 1px solid rgba(201,169,110,0.3); padding: 3px 10px; border-radius: 20px; margin-bottom: 10px; }
+
+  /* 5º lote - full width pequeno */
+  .lote-card.ultimo { grid-column: 1 / -1; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 24px; align-items: center; }
+  .lote-card.ultimo .lote-info {}
+  .lote-card.ultimo .lote-specs { grid-template-columns: 1fr 1fr; }
+  .lote-card.ultimo .lote-cta { grid-column: auto; }
+
+  /* ── LOCALIZAÇÃO ── */
+  .loc-sec { padding: 88px 56px; background: var(--dark2); }
+  .loc-inner { max-width: 1040px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
+  .loc-map { background: var(--dark3); border: 1px solid rgba(255,255,255,0.08); border-radius: 14px; overflow: hidden; height: 300px; display: flex; align-items: center; justify-content: center; position: relative; }
+  .loc-map-inner { text-align: center; }
+  .loc-map-icon { font-size: 48px; margin-bottom: 12px; }
+  .loc-map p { font-size: 13px; color: var(--ts); }
+  .loc-map a { color: var(--ouro); font-size: 12px; font-weight: 600; text-decoration: none; display: block; margin-top: 8px; }
+  .loc-info h3 { font-family: 'Montserrat', sans-serif; font-size: 28px; font-weight: 700; color: white; margin-bottom: 14px; }
+  .loc-info h3 em { font-style: italic; color: var(--ouro); }
+  .loc-info p { font-size: 14px; font-weight: 300; color: var(--ts); line-height: 1.85; margin-bottom: 24px; }
+  .loc-pills { display: flex; flex-wrap: wrap; gap: 8px; }
+  .loc-pill { display: inline-flex; align-items: center; gap: 6px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); color: rgba(255,255,255,0.55); font-size: 12px; font-weight: 500; padding: 6px 12px; border-radius: 30px; }
+
+  /* ── CTA FINAL ── */
+  .cta-sec {
+    padding: 100px 56px;
+    background: linear-gradient(160deg, var(--verde3) 0%, var(--dark) 100%);
+    position: relative; overflow: hidden; text-align: center;
+  }
+  .cta-sec::before { content: ''; position: absolute; inset: 0; background-image: radial-gradient(rgba(201,169,110,0.05) 1px, transparent 1px); background-size: 36px 36px; }
+  .cta-inner { max-width: 700px; margin: 0 auto; position: relative; z-index: 1; }
+  .cta-tag { display: inline-block; font-size: 10px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: var(--ouro); background: rgba(201,169,110,0.1); border: 1px solid rgba(201,169,110,0.25); padding: 5px 14px; border-radius: 30px; margin-bottom: 24px; }
+  .cta-h { font-family: 'Montserrat', sans-serif; font-size: clamp(30px, 4.5vw, 52px); font-weight: 700; color: white; line-height: 1.1; margin-bottom: 18px; }
+  .cta-h em { font-style: italic; color: var(--ouro); }
+  .cta-p { font-size: 16px; font-weight: 300; color: var(--ts); line-height: 1.85; margin-bottom: 40px; }
+  .cta-btns { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+  .cta-legal { font-size: 11px; color: rgba(255,255,255,0.2); margin-top: 24px; line-height: 1.6; }
+
+  /* ── RODAPÉ ── */
+  footer {
+    background: var(--dark); border-top: 1px solid rgba(201,169,110,0.1);
+    padding: 36px 56px;
+    display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px;
+  }
+  .ft-logo { font-family: 'Montserrat', sans-serif; font-size: 18px; font-weight: 600; color: var(--ouro); letter-spacing: 0.06em; }
+  .ft-info { font-size: 12px; color: rgba(255,255,255,0.24); text-align: right; line-height: 1.9; }
+
+  @media (max-width: 768px) {
+    nav { padding: 0 24px; } .nav-cta span { display: none; }
+    .hero, .dif-sec, .lotes-sec, .loc-sec, .cta-sec { padding: 80px 24px 60px; }
+    .hero { padding-top: 160px; }
+    .hero-inner, .loc-inner { grid-template-columns: 1fr; gap: 40px; }
+    .dif-grid { grid-template-columns: 1fr 1fr; }
+    .lotes-grid { grid-template-columns: 1fr; }
+    .lote-card.ultimo { grid-template-columns: 1fr; }
+    footer { padding: 28px 24px; } .ft-info { text-align: left; }
+  }
+
+  /* MARQUEE */
+  .marquee-wrap {
+    position: fixed;
+    top: 96px; /* abaixo da nav (60px) + barra urgência (36px) */
+    left: 0; right: 0;
+    z-index: 98;
+    background: var(--verde);
+    border-bottom: 1px solid rgba(201,169,110,0.12);
+    overflow: hidden;
+    height: 36px;
+    display: flex;
+    align-items: center;
+  }
+  .marquee-track {
+    display: flex;
+    width: 100%;
+    overflow: hidden;
+  }
+  .marquee-inner {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    white-space: nowrap;
+    animation: marquee 28s linear infinite;
+    font-family: "Montserrat", sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(201,169,110,0.7);
+  }
+  .marquee-inner span { padding: 0 24px; }
+  .marquee-inner .sep { color: rgba(201,169,110,0.3); padding: 0 4px; font-size: 10px; }
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+
+</style>
+</head>
+<body>
+
+<!-- BARRA DE URGÊNCIA -->
+<div class="urgencia-bar">
+  Atenção: restam apenas <span>5 lotes</span> disponíveis no Nossos Ventos. Oportunidade única.
+</div>
+
+<!-- FAIXA MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <div class="marquee-inner">
+      <span>Últimas unidades disponíveis</span>
+      <span class="sep">·</span>
+      <span>1º Condomínio Clube de João Câmara</span>
+      <span class="sep">·</span>
+      <span>Lotes a partir de 200m²</span>
+      <span class="sep">·</span>
+      <span>Condições especiais para os últimos lotes</span>
+      <span class="sep">·</span>
+      <span>Últimas unidades disponíveis</span>
+      <span class="sep">·</span>
+      <span>1º Condomínio Clube de João Câmara</span>
+      <span class="sep">·</span>
+      <span>Lotes a partir de 200m²</span>
+      <span class="sep">·</span>
+      <span>Condições especiais para os últimos lotes</span>
+      <span class="sep">·</span>
+      <span>Últimas unidades disponíveis</span>
+      <span class="sep">·</span>
+      <span>1º Condomínio Clube de João Câmara</span>
+      <span class="sep">·</span>
+      <span>Lotes a partir de 200m²</span>
+      <span class="sep">·</span>
+      <span>Condições especiais para os últimos lotes</span>
+      <span class="sep">·</span>
+    </div>
+  </div>
+</div>
+
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">
+    <div>
+      <div class="nav-logo-txt">NOSSOS VENTOS</div>
+      <div class="nav-logo-sub">Condomínio Clube · João Câmara</div>
+    </div>
+  </a>
+  <a href="https://wa.me/5584998550450?text=Ol%C3%A1%21+Vi+o+site+e+tenho+interesse+nos+%C3%BAltimos+lotes+do+Nossos+Ventos." target="_blank" class="nav-cta">Falar com consultor →</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div>
+      <div class="hero-badge"><div class="dot"></div> Últimas unidades disponíveis</div>
+      <h1 class="hero-h1">
+        O lugar onde<br>você vai <em>viver</em><br>de verdade.
+      </h1>
+      <p class="hero-p">
+        <strong>Restam apenas 5 lotes</strong> no único condomínio clube de João Câmara — com infraestrutura completa, área de lazer e um novo padrão de vida a partir de <strong>200m²</strong>. Quem decide primeiro, decide melhor.
+      </p>
+      <div class="hero-btns">
+        <a href="https://wa.me/5584998550450?text=Ol%C3%A1%21+Quero+conhecer+os+%C3%BAltimos+lotes+do+Nossos+Ventos." target="_blank" class="btn-primary">Quero um lote agora →</a>
+        <a href="#lotes" class="btn-secondary">Ver lotes disponíveis ↓</a>
+      </div>
+    </div>
+    <div class="hero-counter">
+      <div class="counter-num">5</div>
+      <div class="counter-label">Lotes disponíveis</div>
+      <div class="counter-sep"></div>
+      <div class="counter-desc">Dos mais de 100 lotes do empreendimento, restam apenas 5. Quando estes forem vendidos, não haverá mais oportunidade.</div>
+      <div class="counter-stats">
+        <div class="c-stat"><div class="sv">200m²</div><div class="sl">A partir de</div></div>
+        <div class="c-stat"><div class="sv">João<br>Câmara</div><div class="sl">Localização</div></div>
+        <div class="c-stat"><div class="sv">1º</div><div class="sl">Cond. Clube</div></div>
+        <div class="c-stat"><div class="sv">100%</div><div class="sl">Infraestrutura</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DIFERENCIAIS -->
+<section class="dif-sec">
+  <div class="dif-inner">
+    <div class="sh"><div class="sh-line"></div><div class="sh-tag">Por que o Nossos Ventos?</div></div>
+    <div class="sh-h">Um novo jeito de <em>viver</em></div>
+    <div class="dif-grid">
+      <div class="dif-card">
+        <div class="dif-icon">—</div>
+        <h4>Área de Lazer Completa</h4>
+        <p>Piscina, espaço gourmet, playground e área de convivência — tudo dentro do condomínio.</p>
+      </div>
+      <div class="dif-card">
+        <div class="dif-icon">—</div>
+        <h4>Segurança 24h</h4>
+        <p>Portaria controlada, câmeras e sistema de segurança para sua família viver com tranquilidade.</p>
+      </div>
+      <div class="dif-card">
+        <div class="dif-icon">—</div>
+        <h4>Natureza e Qualidade de Vida</h4>
+        <p>Áreas verdes preservadas e ambiente planejado para quem valoriza bem-estar e conforto.</p>
+      </div>
+      <div class="dif-card">
+        <div class="dif-icon">—</div>
+        <h4>Localização Estratégica</h4>
+        <p>No coração de João Câmara, com fácil acesso às principais vias e comércios da região.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LOTES -->
+<section id="lotes" class="lotes-sec">
+  <div class="lotes-inner">
+    <div class="sh"><div class="sh-line"></div><div class="sh-tag">Disponibilidade</div></div>
+    <div class="sh-h">Os últimos <em>5 lotes</em></div>
+    <p class="sh-p">Estes são os últimos lotes disponíveis no Nossos Ventos. Cada um foi selecionado por sua localização privilegiada dentro do empreendimento. Condições especiais para quem fechar ainda este mês.</p>
+
+    <div class="lotes-grid">
+
+      <!-- Lote 1 -->
+      <div class="lote-card destaque">
+        <div class="lote-badge-destaque">Melhor localização</div>
+        <div class="lote-num">Lote 01 — Quadra A</div>
+        <div class="lote-nome">Lote <em>Premium</em></div>
+        <div class="lote-area">250m² · Esquina</div>
+        <div class="lote-specs">
+          <div class="lote-spec"><span class="key">Frente</span><span class="val">12,5m</span></div>
+          <div class="lote-spec"><span class="key">Fundo</span><span class="val">12,5m</span></div>
+          <div class="lote-spec"><span class="key">Profundidade</span><span class="val">20m</span></div>
+          <div class="lote-spec"><span class="key">Posição</span><span class="val">Esquina</span></div>
+        </div>
+        <div class="lote-sep"></div>
+        <div class="lote-preco"><sup>R$</sup>95.000</div>
+        <div class="lote-condicao">Entrada + parcelas · consulte condições</div>
+        <a href="https://wa.me/5584998550450?text=Ol%C3%A1%21+Tenho+interesse+no+Lote+01+%28Quadra+A%29+do+Nossos+Ventos." target="_blank" class="lote-cta">Tenho interesse →</a>
+      </div>
+
+      <!-- Lote 2 -->
+      <div class="lote-card">
+        <div class="lote-num">Lote 02 — Quadra A</div>
+        <div class="lote-nome">Lote <em>Standard</em></div>
+        <div class="lote-area">200m²</div>
+        <div class="lote-specs">
+          <div class="lote-spec"><span class="key">Frente</span><span class="val">10m</span></div>
+          <div class="lote-spec"><span class="key">Fundo</span><span class="val">10m</span></div>
+          <div class="lote-spec"><span class="key">Profundidade</span><span class="val">20m</span></div>
+          <div class="lote-spec"><span class="key">Posição</span><span class="val">Meio</span></div>
+        </div>
+        <div class="lote-sep"></div>
+        <div class="lote-preco"><sup>R$</sup>72.000</div>
+        <div class="lote-condicao">Entrada + parcelas · consulte condições</div>
+        <a href="https://wa.me/5584998550450?text=Ol%C3%A1%21+Tenho+interesse+no+Lote+02+%28Quadra+A%29+do+Nossos+Ventos." target="_blank" class="lote-cta">Tenho interesse →</a>
+      </div>
+
+      <!-- Lote 3 -->
+      <div class="lote-card">
+        <div class="lote-num">Lote 03 — Quadra B</div>
+        <div class="lote-nome">Lote <em>Standard</em></div>
+        <div class="lote-area">200m²</div>
+        <div class="lote-specs">
+          <div class="lote-spec"><span class="key">Frente</span><span class="val">10m</span></div>
+          <div class="lote-spec"><span class="key">Fundo</span><span class="val">10m</span></div>
+          <div class="lote-spec"><span class="key">Profundidade</span><span class="val">20m</span></div>
+          <div class="lote-spec"><span class="key">Posição</span><span class="val">Meio</span></div>
+        </div>
+        <div class="lote-sep"></div>
+        <div class="lote-preco"><sup>R$</sup>72.000</div>
+        <div class="lote-condicao">Entrada + parcelas · consulte condições</div>
+        <a href="https://wa.me/5584998550450?text=Ol%C3%A1%21+Tenho+interesse+no+Lote+03+%28Quadra+B%29+do+Nossos+Ventos." target="_blank" class="lote-cta">Tenho interesse →</a>
+      </div>
+
+      <!-- Lote 4 -->
+      <div class="lote-card">
+        <div class="lote-num">Lote 04 — Quadra B</div>
+        <div class="lote-nome">Lote <em>Vista Verde</em></div>
+        <div class="lote-area">220m² · Frente para área verde</div>
+        <div class="lote-specs">
+          <div class="lote-spec"><span class="key">Frente</span><span class="val">11m</span></div>
+          <div class="lote-spec"><span class="key">Fundo</span><span class="val">11m</span></div>
+          <div class="lote-spec"><span class="key">Profundidade</span><span class="val">20m</span></div>
+          <div class="lote-spec"><span class="key">Posição</span><span class="val">Frente área verde</span></div>
+        </div>
+        <div class="lote-sep"></div>
+        <div class="lote-preco"><sup>R$</sup>82.000</div>
+        <div class="lote-condicao">Entrada + parcelas · consulte condições</div>
+        <a href="https://wa.me/5584998550450?text=Ol%C3%A1%21+Tenho+interesse+no+Lote+04+%28Quadra+B%29+do+Nossos+Ventos." target="_blank" class="lote-cta">Tenho interesse →</a>
+      </div>
+
+      <!-- Lote 5 -->
+      <div class="lote-card destaque">
+        <div class="lote-badge-destaque">Último lote próximo à piscina</div>
+        <div class="lote-num">Lote 05 — Quadra C</div>
+        <div class="lote-nome">Lote <em>Club House</em></div>
+        <div class="lote-area">230m² · Próximo à piscina</div>
+        <div class="lote-specs">
+          <div class="lote-spec"><span class="key">Frente</span><span class="val">11,5m</span></div>
+          <div class="lote-spec"><span class="key">Fundo</span><span class="val">11,5m</span></div>
+          <div class="lote-spec"><span class="key">Profundidade</span><span class="val">20m</span></div>
+          <div class="lote-spec"><span class="key">Posição</span><span class="val">Club House</span></div>
+        </div>
+        <div class="lote-sep"></div>
+        <div class="lote-preco"><sup>R$</sup>88.000</div>
+        <div class="lote-condicao">Entrada + parcelas · consulte condições</div>
+        <a href="https://wa.me/5584998550450?text=Ol%C3%A1%21+Tenho+interesse+no+Lote+05+%28Quadra+C%29+do+Nossos+Ventos." target="_blank" class="lote-cta">Tenho interesse →</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- LOCALIZAÇÃO -->
+<section class="loc-sec">
+  <div class="loc-inner">
+    <div class="loc-info">
+      <div class="sh"><div class="sh-line"></div><div class="sh-tag">Onde fica</div></div>
+      <h3>João Câmara, <em>RN</em></h3>
+      <p>O Nossos Ventos está localizado em João Câmara, a cidade que cresce e se desenvolve no interior do Rio Grande do Norte — com fácil acesso à BR-406 e a cerca de 90km de Natal.</p>
+      <div class="loc-pills">
+        <div class="loc-pill">João Câmara / RN</div>
+        <div class="loc-pill">Acesso pela BR-406</div>
+        <div class="loc-pill">90 km de Natal</div>
+        <div class="loc-pill">Próximo a escolas e comércios</div>
+      </div>
+    </div>
+    <div class="loc-map">
+      <div class="loc-map-inner">
+        <div class="loc-map-icon" style="font-size:36px;color:rgba(255,255,255,0.15);">◈</div>
+        <p style="color:rgba(255,255,255,0.35);">Mapa interativo disponível<br>na versão final do site</p>
+        <a href="https://maps.google.com" target="_blank">Abrir no Google Maps ↗</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA FINAL -->
+<section class="cta-sec">
+  <div class="cta-inner">
+    <div class="cta-tag">Últimas unidades</div>
+    <h2 class="cta-h">Não deixe para<br>depois o que você<br>pode <em>garantir agora.</em></h2>
+    <p class="cta-p">Estes são os últimos 5 lotes do Nossos Ventos. Quando acabarem, acabou. Fale com nosso consultor agora e garanta o seu com as melhores condições disponíveis.</p>
+    <div class="cta-btns">
+      <a href="https://wa.me/5584998550450?text=Ol%C3%A1%21+Quero+garantir+meu+lote+no+Nossos+Ventos+antes+que+acabe." target="_blank" class="btn-primary" style="font-size:14px;padding:18px 32px;">Garantir meu lote agora →</a>
+    </div>
+    <div class="cta-legal">* Valores e condições de pagamento sujeitos a alteração. Consulte disponibilidade com nosso consultor.<br>Imagens e dados meramente ilustrativos — versão protótipo.</div>
+  </div>
+</section>
+
+<!-- RODAPÉ -->
+<footer>
+  <div class="ft-logo">NOSSOS VENTOS · Condomínio Clube</div>
+  <div class="ft-info">
+    João Câmara / RN · wa.me/+5584998550450<br>
+    Site produzido por <a href="https://instagram.com/aagenciaangelo" target="_blank" style="color:var(--ouro);text-decoration:none;">Agência Ângelo</a> · Versão protótipo
+  </div>
+</footer>
+
+</body>
+</html>
